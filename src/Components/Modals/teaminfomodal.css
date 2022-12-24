@@ -1,0 +1,10 @@
+.modal-dialog{
+    height: 100%;
+    margin: 0;
+    position: absolute;
+    right: 0;
+    min-width: 400px;
+}
+.modal-content{
+    height: 100%;
+}

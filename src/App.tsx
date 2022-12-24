@@ -1,9 +1,10 @@
 import "./App.css";
+import Teams from "./Pages/Teams";
 
 function App() {
   return (
-    <div className="App">
-      <p>Hello React</p>
+    <div className="app">
+      <Teams />
     </div>
   );
 }
