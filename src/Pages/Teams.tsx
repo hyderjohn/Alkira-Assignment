@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { Button, Table } from "react-bootstrap";
 import { getTeamList } from "../Api/apiList";
 import LoadingUI from "../Components/Modals/Common/LoadingUI";
+import TablePagination from "../Components/Modals/Common/Pagination";
 import TeamInfo from "../Components/Modals/TeamInfo";
 import { TeamApiDataTypes, TeamDataTypes } from "../Types/TeamTypes";
 
@@ -100,6 +101,14 @@ const Teams = () => {
       ) : (
         <LoadingUI />
       )}
+      <div style={{ display: "flex", justifyContent: "end" }}>
+        <TablePagination
+          current={teamsData?.meta?.current_page}
+          totalCount={teamsData?.meta?.total_count}
+          nextPage={teamsData?.meta?.next_page}
+          perPage={10}
+        />
+      </div>
 
       {showTeamInfoModal && (
         <TeamInfo
