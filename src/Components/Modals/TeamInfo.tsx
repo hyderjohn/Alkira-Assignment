@@ -25,22 +25,15 @@ const TeamInfo = ({ visible, handleClose, id }: TeamInfoProps) => {
   }, []);
 
   useEffect(() => {
-    const gameInfo = () => {
-      let id = Math.floor(Math.random() * 46911 + 1);
-      const data = getGameInfo(id);
+    const gameInfo = async () => {
+      let randomId = Math.floor(Math.random() * 46911 + 1);
+      const data = await getGameInfo(randomId);
       if (data) {
         setGameInfoData(data);
       }
     };
     gameInfo();
   }, []);
-
-  //   style={{
-  //     position: "fixed",
-  //     margin: "auto",
-  //     width: "320px",
-  //     height: "100%",
-  //   }}
 
   return (
     <div>
@@ -51,7 +44,12 @@ const TeamInfo = ({ visible, handleClose, id }: TeamInfoProps) => {
           </Modal.Header>
 
           <Modal.Body>
-            <div>Team Full Name : {teamInfoData?.full_name}</div>
+            <div className="mb-3">
+              Team Full Name : {teamInfoData?.full_name}
+            </div>
+            <div>
+              Total Games Played in 2021 : {gameInfoData?.home_team_score}
+            </div>
           </Modal.Body>
         </Modal>
       ) : (

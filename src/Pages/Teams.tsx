@@ -3,12 +3,16 @@ import { Button, Table } from "react-bootstrap";
 import { getTeamList } from "../Api/apiList";
 import LoadingUI from "../Components/Modals/Common/LoadingUI";
 import TeamInfo from "../Components/Modals/TeamInfo";
-import { TeamApiDataTypes } from "../Types/TeamTypes";
+import { TeamApiDataTypes, TeamDataTypes } from "../Types/TeamTypes";
 
 const Teams = () => {
   const idRef = useRef<number>();
   const [teamsData, setTeamsData] = useState<TeamApiDataTypes>();
   const [showTeamInfoModal, setShowTeamInfoModal] = useState(false);
+  const [keyword, setKeyword] = useState<string>("");
+  const search = (keyword: any) => {
+    setKeyword(keyword);
+  };
 
   useEffect(() => {
     const teamsList = async () => {
@@ -38,9 +42,13 @@ const Teams = () => {
         <p className="h2 font-weight-bold">NBA TEAMS</p>
       </div>
       <div className="input-group mb-3">
-        <input type={"search"} placeholder="Search" style={{ width: "50%" }} />
+        <input
+          type={"search"}
+          placeholder="Search"
+          style={{ width: "50%" }}
+          onChange={(e) => search(e.target.value)}
+        />
       </div>
-
       {teamsData !== undefined ? (
         <Table hover>
           <thead style={{ backgroundColor: "#054684", color: "white" }}>
@@ -55,25 +63,37 @@ const Teams = () => {
           </thead>
           <tbody>
             {teamsData &&
-              teamsData?.data?.map((item: any) => {
-                return (
-                  <tr>
-                    <td>{item?.name}</td>
-                    <td>{item?.city}</td>
-                    <td>{item?.abbreviation}</td>
-                    <td>{item?.conference}</td>
-                    <td>{item?.division}</td>
-                    <td>
-                      <Button
-                        variant="light"
-                        size="sm"
-                        onClick={() => handleViewTeam(item?.id)}
-                      >
-                        View
-                      </Button>
-                    </td>
-                  </tr>
-                );
+              teamsData?.data?.map((item: TeamDataTypes) => {
+                if (
+                  item?.name.toLowerCase().includes(keyword.toLowerCase()) ||
+                  item?.city.toLowerCase().includes(keyword.toLowerCase()) ||
+                  item?.abbreviation
+                    .toLowerCase()
+                    .includes(keyword.toLowerCase()) ||
+                  item?.division
+                    .toLowerCase()
+                    .includes(keyword.toLowerCase()) ||
+                  item?.conference.toLowerCase().includes(keyword.toLowerCase())
+                ) {
+                  return (
+                    <tr>
+                      <td>{item?.name}</td>
+                      <td>{item?.city}</td>
+                      <td>{item?.abbreviation}</td>
+                      <td>{item?.conference}</td>
+                      <td>{item?.division}</td>
+                      <td>
+                        <Button
+                          variant="light"
+                          size="sm"
+                          onClick={() => handleViewTeam(item?.id)}
+                        >
+                          View
+                        </Button>
+                      </td>
+                    </tr>
+                  );
+                }
               })}
           </tbody>
         </Table>
