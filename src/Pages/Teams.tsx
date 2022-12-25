@@ -1,12 +1,14 @@
 import { useEffect, useRef, useState } from "react";
-import { Table } from "react-bootstrap";
+import { Button, Form, InputGroup, Table } from "react-bootstrap";
 import { getTeamList } from "../Api/apiList";
 import LoadingUI from "../Components/Modals/Common/LoadingUI";
 import TablePagination from "../Components/Modals/Common/Pagination";
+import SearchIcon from "../Components/Modals/Common/SearchIcon";
 import TeamInfo from "../Components/Modals/TeamInfo";
 import useTable from "../Hooks/useTable";
 import { TeamApiDataTypes, TeamDataTypes } from "../Types/TeamTypes";
 import { search } from "../utils/helperFunctions";
+
 const recordsPerPage = 10;
 const Teams = () => {
   const { currentPage, setCurrentPage, searchKeyword, handleSearch } =
@@ -16,24 +18,31 @@ const Teams = () => {
   const [teamsData, setTeamsData] = useState<TeamApiDataTypes | undefined>();
   const [showTeamInfoModal, setShowTeamInfoModal] = useState(false);
   const [teamInfo, setTeamInfo] = useState<TeamDataTypes>();
+  const [sortedData, setSortedData] = useState<string[]>([]);
   const [loading, setLoading] = useState(false);
   useEffect(() => {
     const teamsList = async () => {
-      try {
-      } catch (error) {}
-
       setLoading(true);
       const data = await getTeamList({
         page: currentPage,
         size: recordsPerPage,
       });
+      setLoading(false);
       if (data) {
         setTeamsData(data);
-        setLoading(false);
       }
     };
     teamsList();
   }, [currentPage]);
+
+  // useEffect(() => {
+  //   if (teamsData) {
+  //     const data = teamsData.data?.map((item: any) => {
+  //       return item.sort(()=>{});
+  //     });
+  //     setSortedData(data);
+  //   }
+  // }, [teamsData]);
 
   const handleViewTeam = (data: TeamDataTypes) => {
     idRef.current = data?.id;
@@ -41,6 +50,11 @@ const Teams = () => {
     setShowTeamInfoModal(true);
   };
   const pageCount = teamsData && teamsData?.meta?.total_pages;
+
+  // const sorted = teamsData?.data.sort((a: any, b: any) => {
+  //   return a.city > b.city ? -1 : 1;
+  // });
+  // console.log(sorted);
 
   return (
     <>
@@ -52,24 +66,53 @@ const Teams = () => {
           margin: "10px",
         }}
       >
-        <p className="h2 font-weight-bold">NBA TEAMS</p>
+        <p className="h2 font-weight-bold">
+          <strong>NBA TEAMS</strong>
+        </p>
       </div>
       {!loading && (
         <>
-          <div className="input-group mb-3">
-            <input
-              type={"search"}
-              placeholder="Search"
-              style={{ width: "50%" }}
-              onChange={(e) => handleSearch(e.target.value)}
-            />
+          <div style={{ width: "50%" }}>
+            <InputGroup className="mb-3">
+              <InputGroup.Text
+                id="basic-addon1"
+                style={{ backgroundColor: "transparent" }}
+              >
+                <SearchIcon />
+              </InputGroup.Text>
+              <Form.Control
+                className="shadow-none"
+                aria-label="search"
+                aria-describedby="basic-addon1"
+                onChange={(e) => handleSearch(e.target.value)}
+              />
+            </InputGroup>
           </div>
 
-          <Table hover>
+          <Table hover className="sortable">
             <thead style={{ backgroundColor: "#054684", color: "white" }}>
               <tr>
                 <th>Team Name</th>
-                <th>City</th>
+                <th
+                // style={{
+                //   display: "flex",
+                //   justifyContent: "space-between",
+                //   alignContent: "center",
+                // }}
+                >
+                  City
+                  {/* {
+                    <span>
+                      <Button
+                        variant="link"
+                        size="sm"
+                        // onClick={() => handleSort}
+                      >
+                        A
+                      </Button>
+                    </span>
+                  } */}
+                </th>
                 <th>Abbreviation</th>
                 <th>Conference</th>
                 <th>Division</th>
@@ -78,29 +121,12 @@ const Teams = () => {
             <tbody>
               {teamsData &&
                 teamsData?.data?.map((item: TeamDataTypes) => {
-                  if (
-                    search(item, searchKeyword)
-                    // item?.name
-                    //   .toLowerCase()
-                    //   .includes(searchKeyword.toLowerCase()) ||
-                    // item?.city
-                    //   .toLowerCase()
-                    //   .includes(searchKeyword.toLowerCase()) ||
-                    // item?.abbreviation
-                    //   .toLowerCase()
-                    //   .includes(searchKeyword.toLowerCase()) ||
-                    // item?.division
-                    //   .toLowerCase()
-                    //   .includes(searchKeyword.toLowerCase()) ||
-                    // item?.conference
-                    //   .toLowerCase()
-                    //   .includes(searchKeyword.toLowerCase())
-                  ) {
+                  if (search(item, searchKeyword)) {
                     return (
                       <tr
                         onClick={() => handleViewTeam(item)}
                         key={item.id}
-                        style={{ cursor: "pointer" }}
+                        style={{ cursor: "pointer", fontWeight: "bold" }}
                       >
                         <td>{item?.name}</td>
                         <td>{item?.city}</td>
@@ -123,9 +149,6 @@ const Teams = () => {
         </>
       )}
       {loading && <LoadingUI />}
-      {/* ) : (
-        <LoadingUI />
-      )} */}
 
       {showTeamInfoModal && (
         <TeamInfo

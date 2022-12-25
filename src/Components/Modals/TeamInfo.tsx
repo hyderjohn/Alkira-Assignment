@@ -22,9 +22,9 @@ const TeamInfo = ({ visible, handleClose, id, teamInfo }: TeamInfoProps) => {
       setLoading(true);
       let randomId = Math.floor(Math.random() * 46911 + 1);
       const data = await getGameInfo(randomId);
+      setLoading(false);
       if (data) {
         setGameInfoData(data);
-        setLoading(false);
       }
     };
     gameInfo();
@@ -76,7 +76,8 @@ const TeamInfo = ({ visible, handleClose, id, teamInfo }: TeamInfoProps) => {
                 <Col>
                   <p>
                     <strong>
-                      {gameInfoData && formatDate(gameInfoData?.date)}
+                      {gameInfoData &&
+                        gameInfoData?.date.toLocaleString().slice(0, 10)}
                     </strong>
                   </p>
                 </Col>

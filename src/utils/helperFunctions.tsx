@@ -1,4 +1,5 @@
 import moment from "moment";
+import { TeamDataTypes } from "../Types/TeamTypes";
 
 export const formatDate = (date: string) => {
   if (!date) return "";
@@ -30,7 +31,7 @@ export const showErrorAlert = () => {
   );
 };
 
-export const search = (currentItem: any, keyword: any) => {
+export const search = (currentItem: TeamDataTypes, keyword: string) => {
   // for (let label in currentItem) {
   //   console.log(currentItem, keyword);
   //   // console.log(currentItem[label]);
