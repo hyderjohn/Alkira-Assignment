@@ -10,3 +10,7 @@ const LoadingUI = () => {
 };
 
 export default LoadingUI;
+
+// export interface AuxProps {
+//   children: ReactChild | ReactChild[] | ReactChildren | ReactChildren[];
+// }

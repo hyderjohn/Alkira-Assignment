@@ -13,18 +13,7 @@ interface TeamInfoProps {
 }
 
 const TeamInfo = ({ visible, handleClose, id, teamInfo }: TeamInfoProps) => {
-  // const [teamInfoData, setTeamInfoData] = useState<TeamTypesById>();
   const [gameInfoData, setGameInfoData] = useState<GameTypes>();
-
-  // useEffect(() => {
-  //   const teamInfo = async () => {
-  //     const data = await getTeamInfo(id);
-  //     if (data) {
-  //       setTeamInfoData(data);
-  //     }
-  //   };
-  //   teamInfo();
-  // }, []);
 
   useEffect(() => {
     const gameInfo = async () => {

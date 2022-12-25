@@ -1,39 +1,39 @@
 import Pagination from "react-bootstrap/Pagination";
 
 const TablePagination = ({
-  nPages,
+  pageCount,
   currentPage,
   setCurrentPage,
 }: {
-  nPages: number;
+  pageCount: number;
   currentPage: number;
   setCurrentPage: (agr0: number) => void;
 }) => {
-  const pageNumbers = Array.from(Array(nPages && nPages + 1).keys()).slice(1);
+  const pageNumbers = Array.from(
+    Array(pageCount && pageCount + 1).keys()
+  ).slice(1);
 
   const nextPage = () => {
-    if (currentPage !== nPages) setCurrentPage(currentPage + 1);
+    if (currentPage !== pageCount) setCurrentPage(currentPage + 1);
   };
   const prevPage = () => {
     if (currentPage !== 1) setCurrentPage(currentPage - 1);
   };
 
-  console.log(currentPage);
-
   return (
     <Pagination size="sm">
       <Pagination.Prev onClick={prevPage} href="#" />
-      {pageNumbers.map((pgNumber) => (
+      {pageNumbers.map((pageNumber) => (
         <li
-          key={pgNumber}
-          className={`page-item ${currentPage == pgNumber ? "active" : ""} `}
+          key={pageNumber}
+          className={`page-item ${currentPage === pageNumber ? "active" : ""} `}
         >
           <a
-            onClick={() => setCurrentPage(pgNumber)}
+            onClick={() => setCurrentPage(pageNumber)}
             className="page-link"
             href="#"
           >
-            {pgNumber}
+            {pageNumber}
           </a>
         </li>
       ))}

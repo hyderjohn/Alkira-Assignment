@@ -4,30 +4,29 @@ import { getTeamList } from "../Api/apiList";
 import LoadingUI from "../Components/Modals/Common/LoadingUI";
 import TablePagination from "../Components/Modals/Common/Pagination";
 import TeamInfo from "../Components/Modals/TeamInfo";
+import useTable from "../Hooks/useTable";
 import { TeamApiDataTypes, TeamDataTypes } from "../Types/TeamTypes";
-
+const recordsPerPage = 10;
 const Teams = () => {
+  const { currentPage, setCurrentPage, searchKeyword, handleSearch } = useTable(
+    {}
+  );
+
   const idRef = useRef<number>();
   const [teamsData, setTeamsData] = useState<TeamApiDataTypes | undefined>();
   const [showTeamInfoModal, setShowTeamInfoModal] = useState(false);
-  const [currentPage, setCurrentPage] = useState<number>(1);
-  const [recordsPerPage] = useState<number>(10);
-  const [keyword, setKeyword] = useState<string>("");
   const [teamInfo, setTeamInfo] = useState<TeamDataTypes>();
-  const search = (keyword: string) => {
-    setKeyword(keyword);
-  };
-
-  console.log(currentPage, "Team");
-
+  const [loading, setLoading] = useState(false);
   useEffect(() => {
     const teamsList = async () => {
+      setLoading(true);
       const data = await getTeamList({
         page: currentPage,
         size: recordsPerPage,
       });
       if (data) {
         setTeamsData(data);
+        setLoading(false);
       }
     };
     teamsList();
@@ -38,15 +37,7 @@ const Teams = () => {
     setTeamInfo(data);
     setShowTeamInfoModal(true);
   };
-
-  //   const indexOfLastRecord = currentPage * recordsPerPage;
-  //   const indexOfFirstRecord = indexOfLastRecord - recordsPerPage;
-  //   const currentRecords = teamsData?.data?.slice(
-  //     indexOfFirstRecord,
-  //     indexOfLastRecord
-  //   );
-  const nPages =
-    teamsData && Math.ceil(teamsData?.meta?.total_count / recordsPerPage);
+  const pageCount = teamsData && teamsData?.meta?.total_pages;
 
   return (
     <>
@@ -65,57 +56,67 @@ const Teams = () => {
           type={"search"}
           placeholder="Search"
           style={{ width: "50%" }}
-          onChange={(e) => search(e.target.value)}
+          onChange={(e) => handleSearch(e.target.value)}
         />
       </div>
-      {teamsData !== undefined ? (
-        <Table hover>
-          <thead style={{ backgroundColor: "#054684", color: "white" }}>
-            <tr>
-              <th>Team Name</th>
-              <th>City</th>
-              <th>Abbreviation</th>
-              <th>Conference</th>
-              <th>Division</th>
-            </tr>
-          </thead>
-          <tbody>
-            {teamsData &&
-              teamsData?.data?.map((item: TeamDataTypes) => {
-                if (
-                  item?.name.toLowerCase().includes(keyword.toLowerCase()) ||
-                  item?.city.toLowerCase().includes(keyword.toLowerCase()) ||
-                  item?.abbreviation
-                    .toLowerCase()
-                    .includes(keyword.toLowerCase()) ||
-                  item?.division
-                    .toLowerCase()
-                    .includes(keyword.toLowerCase()) ||
-                  item?.conference.toLowerCase().includes(keyword.toLowerCase())
-                ) {
-                  return (
-                    <tr onClick={() => handleViewTeam(item)}>
-                      <td>{item?.name}</td>
-                      <td>{item?.city}</td>
-                      <td>{item?.abbreviation}</td>
-                      <td>{item?.conference}</td>
-                      <td>{item?.division}</td>
-                    </tr>
-                  );
-                }
-              })}
-          </tbody>
-        </Table>
-      ) : (
-        <LoadingUI />
+      {!loading && (
+        <>
+          <Table hover>
+            <thead style={{ backgroundColor: "#054684", color: "white" }}>
+              <tr>
+                <th>Team Name</th>
+                <th>City</th>
+                <th>Abbreviation</th>
+                <th>Conference</th>
+                <th>Division</th>
+              </tr>
+            </thead>
+            <tbody>
+              {teamsData &&
+                teamsData?.data?.map((item: TeamDataTypes) => {
+                  if (
+                    item?.name
+                      .toLowerCase()
+                      .includes(searchKeyword.toLowerCase()) ||
+                    item?.city
+                      .toLowerCase()
+                      .includes(searchKeyword.toLowerCase()) ||
+                    item?.abbreviation
+                      .toLowerCase()
+                      .includes(searchKeyword.toLowerCase()) ||
+                    item?.division
+                      .toLowerCase()
+                      .includes(searchKeyword.toLowerCase()) ||
+                    item?.conference
+                      .toLowerCase()
+                      .includes(searchKeyword.toLowerCase())
+                  ) {
+                    return (
+                      <tr onClick={() => handleViewTeam(item)} key={item.id}>
+                        <td>{item?.name}</td>
+                        <td>{item?.city}</td>
+                        <td>{item?.abbreviation}</td>
+                        <td>{item?.conference}</td>
+                        <td>{item?.division}</td>
+                      </tr>
+                    );
+                  }
+                })}
+            </tbody>
+          </Table>
+          <div style={{ display: "flex", justifyContent: "end" }}>
+            <TablePagination
+              pageCount={pageCount as number}
+              currentPage={currentPage}
+              setCurrentPage={setCurrentPage}
+            />
+          </div>
+        </>
       )}
-      <div style={{ display: "flex", justifyContent: "end" }}>
-        <TablePagination
-          nPages={nPages as number}
-          currentPage={currentPage}
-          setCurrentPage={setCurrentPage}
-        />
-      </div>
+      {loading && <LoadingUI />}
+      {/* ) : (
+        <LoadingUI />
+      )} */}
 
       {showTeamInfoModal && (
         <TeamInfo
