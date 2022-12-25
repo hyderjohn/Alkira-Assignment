@@ -6,6 +6,7 @@ import TablePagination from "../Components/Modals/Common/Pagination";
 import TeamInfo from "../Components/Modals/TeamInfo";
 import useTable from "../Hooks/useTable";
 import { TeamApiDataTypes, TeamDataTypes } from "../Types/TeamTypes";
+import { search } from "../utils/helperFunctions";
 const recordsPerPage = 10;
 const Teams = () => {
   const { currentPage, setCurrentPage, searchKeyword, handleSearch } =
@@ -18,6 +19,9 @@ const Teams = () => {
   const [loading, setLoading] = useState(false);
   useEffect(() => {
     const teamsList = async () => {
+      try {
+      } catch (error) {}
+
       setLoading(true);
       const data = await getTeamList({
         page: currentPage,
@@ -75,21 +79,22 @@ const Teams = () => {
               {teamsData &&
                 teamsData?.data?.map((item: TeamDataTypes) => {
                   if (
-                    item?.name
-                      .toLowerCase()
-                      .includes(searchKeyword.toLowerCase()) ||
-                    item?.city
-                      .toLowerCase()
-                      .includes(searchKeyword.toLowerCase()) ||
-                    item?.abbreviation
-                      .toLowerCase()
-                      .includes(searchKeyword.toLowerCase()) ||
-                    item?.division
-                      .toLowerCase()
-                      .includes(searchKeyword.toLowerCase()) ||
-                    item?.conference
-                      .toLowerCase()
-                      .includes(searchKeyword.toLowerCase())
+                    search(item, searchKeyword)
+                    // item?.name
+                    //   .toLowerCase()
+                    //   .includes(searchKeyword.toLowerCase()) ||
+                    // item?.city
+                    //   .toLowerCase()
+                    //   .includes(searchKeyword.toLowerCase()) ||
+                    // item?.abbreviation
+                    //   .toLowerCase()
+                    //   .includes(searchKeyword.toLowerCase()) ||
+                    // item?.division
+                    //   .toLowerCase()
+                    //   .includes(searchKeyword.toLowerCase()) ||
+                    // item?.conference
+                    //   .toLowerCase()
+                    //   .includes(searchKeyword.toLowerCase())
                   ) {
                     return (
                       <tr
