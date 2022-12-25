@@ -8,9 +8,8 @@ import useTable from "../Hooks/useTable";
 import { TeamApiDataTypes, TeamDataTypes } from "../Types/TeamTypes";
 const recordsPerPage = 10;
 const Teams = () => {
-  const { currentPage, setCurrentPage, searchKeyword, handleSearch } = useTable(
-    {}
-  );
+  const { currentPage, setCurrentPage, searchKeyword, handleSearch } =
+    useTable();
 
   const idRef = useRef<number>();
   const [teamsData, setTeamsData] = useState<TeamApiDataTypes | undefined>();
@@ -51,16 +50,17 @@ const Teams = () => {
       >
         <p className="h2 font-weight-bold">NBA TEAMS</p>
       </div>
-      <div className="input-group mb-3">
-        <input
-          type={"search"}
-          placeholder="Search"
-          style={{ width: "50%" }}
-          onChange={(e) => handleSearch(e.target.value)}
-        />
-      </div>
       {!loading && (
         <>
+          <div className="input-group mb-3">
+            <input
+              type={"search"}
+              placeholder="Search"
+              style={{ width: "50%" }}
+              onChange={(e) => handleSearch(e.target.value)}
+            />
+          </div>
+
           <Table hover>
             <thead style={{ backgroundColor: "#054684", color: "white" }}>
               <tr>
@@ -92,7 +92,11 @@ const Teams = () => {
                       .includes(searchKeyword.toLowerCase())
                   ) {
                     return (
-                      <tr onClick={() => handleViewTeam(item)} key={item.id}>
+                      <tr
+                        onClick={() => handleViewTeam(item)}
+                        key={item.id}
+                        style={{ cursor: "pointer" }}
+                      >
                         <td>{item?.name}</td>
                         <td>{item?.city}</td>
                         <td>{item?.abbreviation}</td>
