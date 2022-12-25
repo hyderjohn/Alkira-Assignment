@@ -7,4 +7,8 @@
 }
 .modal-content{
     height: 100%;
+    border-radius: 0;
+}
+.modal-header{
+    border-radius: 0;
 }

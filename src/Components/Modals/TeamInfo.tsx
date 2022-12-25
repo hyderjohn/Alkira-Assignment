@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Col, Modal, Row } from "react-bootstrap";
-import { getGameInfo, getTeamInfo } from "../../Api/apiList";
-import { GameTypes, TeamTypesById } from "../../Types/TeamTypes";
+import { getGameInfo } from "../../Api/apiList";
+import { GameTypes, TeamDataTypes } from "../../Types/TeamTypes";
 import { formatDate } from "../../utils/helperFunctions";
 import "./teaminfomodal.css";
 
@@ -9,21 +9,22 @@ interface TeamInfoProps {
   visible: boolean;
   handleClose: () => void;
   id: number;
+  teamInfo: TeamDataTypes;
 }
 
-const TeamInfo = ({ visible, handleClose, id }: TeamInfoProps) => {
-  const [teamInfoData, setTeamInfoData] = useState<TeamTypesById>();
+const TeamInfo = ({ visible, handleClose, id, teamInfo }: TeamInfoProps) => {
+  // const [teamInfoData, setTeamInfoData] = useState<TeamTypesById>();
   const [gameInfoData, setGameInfoData] = useState<GameTypes>();
 
-  useEffect(() => {
-    const teamInfo = async () => {
-      const data = await getTeamInfo(id);
-      if (data) {
-        setTeamInfoData(data);
-      }
-    };
-    teamInfo();
-  }, []);
+  // useEffect(() => {
+  //   const teamInfo = async () => {
+  //     const data = await getTeamInfo(id);
+  //     if (data) {
+  //       setTeamInfoData(data);
+  //     }
+  //   };
+  //   teamInfo();
+  // }, []);
 
   useEffect(() => {
     const gameInfo = async () => {
@@ -40,7 +41,7 @@ const TeamInfo = ({ visible, handleClose, id }: TeamInfoProps) => {
     <div>
       <Modal show={visible} onHide={handleClose} animation>
         <Modal.Header closeButton style={{ backgroundColor: "#d8dfe4" }}>
-          <Modal.Title>{teamInfoData?.name}</Modal.Title>
+          <Modal.Title>{teamInfo?.name}</Modal.Title>
         </Modal.Header>
 
         <Modal.Body>
@@ -48,7 +49,7 @@ const TeamInfo = ({ visible, handleClose, id }: TeamInfoProps) => {
             <Col>
               <div className="mb-3">Team Full Name </div>
             </Col>
-            <Col>{teamInfoData?.full_name}</Col>
+            <Col>{teamInfo?.full_name}</Col>
           </Row>
           <Row>
             <Col>
@@ -69,7 +70,7 @@ const TeamInfo = ({ visible, handleClose, id }: TeamInfoProps) => {
           <Row>
             <Col>
               <div className="mb-3">
-                <p className="font-weight-bold">Date</p>
+                <p>Date</p>
               </div>
             </Col>
             <Col> {gameInfoData && formatDate(gameInfoData?.date)}</Col>

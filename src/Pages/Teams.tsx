@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { Button, Table } from "react-bootstrap";
+import { Table } from "react-bootstrap";
 import { getTeamList } from "../Api/apiList";
 import LoadingUI from "../Components/Modals/Common/LoadingUI";
 import TablePagination from "../Components/Modals/Common/Pagination";
@@ -8,27 +8,45 @@ import { TeamApiDataTypes, TeamDataTypes } from "../Types/TeamTypes";
 
 const Teams = () => {
   const idRef = useRef<number>();
-  const [teamsData, setTeamsData] = useState<TeamApiDataTypes>();
+  const [teamsData, setTeamsData] = useState<TeamApiDataTypes | undefined>();
   const [showTeamInfoModal, setShowTeamInfoModal] = useState(false);
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const [recordsPerPage] = useState<number>(10);
   const [keyword, setKeyword] = useState<string>("");
-  const search = (keyword: any) => {
+  const [teamInfo, setTeamInfo] = useState<TeamDataTypes>();
+  const search = (keyword: string) => {
     setKeyword(keyword);
   };
 
+  console.log(currentPage, "Team");
+
   useEffect(() => {
     const teamsList = async () => {
-      const data = await getTeamList();
+      const data = await getTeamList({
+        page: currentPage,
+        size: recordsPerPage,
+      });
       if (data) {
         setTeamsData(data);
       }
     };
     teamsList();
-  }, []);
+  }, [currentPage]);
 
-  const handleViewTeam = (id: number) => {
-    idRef.current = id;
+  const handleViewTeam = (data: TeamDataTypes) => {
+    idRef.current = data?.id;
+    setTeamInfo(data);
     setShowTeamInfoModal(true);
   };
+
+  //   const indexOfLastRecord = currentPage * recordsPerPage;
+  //   const indexOfFirstRecord = indexOfLastRecord - recordsPerPage;
+  //   const currentRecords = teamsData?.data?.slice(
+  //     indexOfFirstRecord,
+  //     indexOfLastRecord
+  //   );
+  const nPages =
+    teamsData && Math.ceil(teamsData?.meta?.total_count / recordsPerPage);
 
   return (
     <>
@@ -59,7 +77,6 @@ const Teams = () => {
               <th>Abbreviation</th>
               <th>Conference</th>
               <th>Division</th>
-              <th>Action</th>
             </tr>
           </thead>
           <tbody>
@@ -77,21 +94,12 @@ const Teams = () => {
                   item?.conference.toLowerCase().includes(keyword.toLowerCase())
                 ) {
                   return (
-                    <tr>
+                    <tr onClick={() => handleViewTeam(item)}>
                       <td>{item?.name}</td>
                       <td>{item?.city}</td>
                       <td>{item?.abbreviation}</td>
                       <td>{item?.conference}</td>
                       <td>{item?.division}</td>
-                      <td>
-                        <Button
-                          variant="light"
-                          size="sm"
-                          onClick={() => handleViewTeam(item?.id)}
-                        >
-                          View
-                        </Button>
-                      </td>
                     </tr>
                   );
                 }
@@ -103,10 +111,9 @@ const Teams = () => {
       )}
       <div style={{ display: "flex", justifyContent: "end" }}>
         <TablePagination
-          current={teamsData?.meta?.current_page}
-          totalCount={teamsData?.meta?.total_count}
-          nextPage={teamsData?.meta?.next_page}
-          perPage={10}
+          nPages={nPages as number}
+          currentPage={currentPage}
+          setCurrentPage={setCurrentPage}
         />
       </div>
 
@@ -115,6 +122,7 @@ const Teams = () => {
           visible={showTeamInfoModal}
           handleClose={() => setShowTeamInfoModal(false)}
           id={idRef.current as number}
+          teamInfo={teamInfo as TeamDataTypes}
         />
       )}
     </>
