@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { Button, Form, InputGroup, Table } from "react-bootstrap";
 import { getTeamList } from "../Api/apiList";
 import LoadingUI from "../Components/Modals/Common/LoadingUI";
-import TablePagination from "../Components/Modals/Common/Pagination";
+import TablePagination from "../Components/Modals/Common/TablePagination";
 import ViewTeam from "../Components/Modals/Modals/ViewTeam";
 import useTable from "../Hooks/useTable";
 import { TeamApiDataTypes, TeamDataTypes } from "../Types/TeamTypes";
@@ -25,6 +25,9 @@ const Teams = () => {
   const [teamInfo, setTeamInfo] = useState<TeamDataTypes>();
   const [isSorted, setIsSorted] = useState(false);
   const [loading, setLoading] = useState(false);
+
+  const pageCount = teamsData && teamsData?.meta?.total_pages; // total pages data from api.
+
   useEffect(() => {
     const teamsList = async () => {
       setLoading(true);
@@ -52,9 +55,8 @@ const Teams = () => {
     setTeamInfo(data);
     setShowTeamInfoModal(true);
   };
-  const pageCount = teamsData && teamsData?.meta?.total_pages;
 
-  const sorted = () => {
+  const handleSort = () => {
     if (isSorted === false) {
       const data = teamsData?.data.sort(
         (a: { city: string }, b: { city: string }) => {
@@ -114,18 +116,12 @@ const Teams = () => {
             <thead className={Styles.head}>
               <tr>
                 <th>Team Name</th>
-                <th
-                  style={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                    alignItems: "center",
-                  }}
-                >
+                <th>
                   City
                   <Button
                     variant="link"
                     size="sm"
-                    onClick={() => sorted()}
+                    onClick={() => handleSort()}
                     style={{
                       padding: "0rem",
                       textAlign: "right",

@@ -9,6 +9,7 @@ const TablePagination = ({
   currentPage: number;
   setCurrentPage: (agr0: number) => void;
 }) => {
+  //generate array of pagenumbers from 1 to total pagecount.
   const pageNumbers = Array.from(
     Array(pageCount && pageCount + 1).keys()
   ).slice(1);
