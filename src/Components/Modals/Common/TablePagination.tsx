@@ -25,18 +25,21 @@ const TablePagination = ({
     <Pagination size="sm">
       <Pagination.Prev onClick={prevPage} href="#" />
       {pageNumbers.map((pageNumber) => (
-        <li
-          key={pageNumber}
-          className={`page-item ${currentPage === pageNumber ? "active" : ""} `}
-        >
-          <a
-            onClick={() => setCurrentPage(pageNumber)}
-            className="page-link"
-            // href="#"
+        <strong>
+          <li
+            key={pageNumber}
+            className={`page-item ${
+              currentPage === pageNumber ? "active" : ""
+            } `}
           >
-            {pageNumber}
-          </a>
-        </li>
+            <div
+              onClick={() => setCurrentPage(pageNumber)}
+              className="page-link"
+            >
+              {pageNumber}
+            </div>
+          </li>
+        </strong>
       ))}
       <Pagination.Next onClick={nextPage} href="#" />
     </Pagination>
