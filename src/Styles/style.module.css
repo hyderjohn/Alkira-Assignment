@@ -9,7 +9,7 @@
 
 .tablepage {
   display: flex;
-  align-items: end;
+  align-items: flex-end;
   color: #054684;
   margin: 10px;
 }

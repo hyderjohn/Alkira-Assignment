@@ -32,7 +32,7 @@ const TablePagination = ({
           <a
             onClick={() => setCurrentPage(pageNumber)}
             className="page-link"
-            href="#"
+            // href="#"
           >
             {pageNumber}
           </a>
