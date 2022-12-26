@@ -1,18 +1,14 @@
 import { useEffect, useRef, useState } from "react";
-import { Button, Form, InputGroup, Table } from "react-bootstrap";
+import { Form, InputGroup } from "react-bootstrap";
 import { getTeamList } from "../Api/apiList";
 import LoadingUI from "../Components/Modals/Common/LoadingUI";
 import TablePagination from "../Components/Modals/Common/TablePagination";
 import ViewTeam from "../Components/Modals/Modals/ViewTeam";
 import useTable from "../Hooks/useTable";
 import { TeamApiDataTypes, TeamDataTypes } from "../Types/TeamTypes";
-import { search } from "../utils/helperFunctions";
 import Styles from "../Styles/style.module.css";
-import {
-  SortIconUp,
-  SearchIcon,
-  SortIconDown,
-} from "../Components/Modals/Common/Icons";
+import { SearchIcon } from "../Components/Modals/Common/Icons";
+import Teamtable from "../Components/Modals/Tables/Teamtable";
 
 const recordsPerPage = 10;
 const Teams = () => {
@@ -112,49 +108,13 @@ const Teams = () => {
             </InputGroup>
           </div>
 
-          <Table hover className="sortable">
-            <thead className={Styles.head}>
-              <tr>
-                <th>Team Name</th>
-                <th>
-                  <div className={Styles.columhead}>
-                    City
-                    <Button
-                      className={Styles.sortbutton}
-                      variant="link"
-                      size="sm"
-                      onClick={() => handleSort()}
-                    >
-                      {isSorted === true ? <SortIconUp /> : <SortIconDown />}
-                    </Button>
-                  </div>
-                </th>
-                <th>Abbreviation</th>
-                <th>Conference</th>
-                <th>Division</th>
-              </tr>
-            </thead>
-            <tbody>
-              {teamsData &&
-                teamsData?.data?.map((item: TeamDataTypes) => {
-                  if (search(item, searchKeyword)) {
-                    return (
-                      <tr
-                        className={Styles.row}
-                        onClick={() => handleViewTeam(item)}
-                        key={item.id}
-                      >
-                        <td>{item?.name}</td>
-                        <td>{item?.city}</td>
-                        <td>{item?.abbreviation}</td>
-                        <td>{item?.conference}</td>
-                        <td>{item?.division}</td>
-                      </tr>
-                    );
-                  }
-                })}
-            </tbody>
-          </Table>
+          <Teamtable
+            handleSort={handleSort}
+            isSorted={isSorted}
+            teamsData={teamsData}
+            searchKeyword={searchKeyword}
+            handleViewTeam={handleViewTeam}
+          />
           <div style={{ display: "flex", justifyContent: "end" }}>
             <TablePagination
               pageCount={pageCount as number}
