@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Col, Modal, Row } from "react-bootstrap";
-import { getGameInfo } from "../../../Api/apiList";
-import { GameTypes, TeamDataTypes } from "../../../Types/TeamTypes";
+import { getGameInfo } from "../../Api/apiList";
+import { GameTypes, TeamDataTypes } from "../../Types/TeamTypes";
 import LoadingUI from "../Common/LoadingUI";
 import "./viewteaminfomodal.css";
 

@@ -1,14 +1,14 @@
 import { useEffect, useRef, useState } from "react";
 import { Form, InputGroup } from "react-bootstrap";
 import { getTeamList } from "../Api/apiList";
-import LoadingUI from "../Components/Modals/Common/LoadingUI";
-import TablePagination from "../Components/Modals/Common/TablePagination";
-import ViewTeam from "../Components/Modals/Modals/ViewTeam";
+import LoadingUI from "../Components/Common/LoadingUI";
+import TablePagination from "../Components/Common/TablePagination";
 import useTable from "../Hooks/useTable";
 import { TeamApiDataTypes, TeamDataTypes } from "../Types/TeamTypes";
 import Styles from "../Styles/style.module.css";
-import { SearchIcon } from "../Components/Modals/Common/Icons";
-import Teamtable from "../Components/Modals/Tables/Teamtable";
+import { SearchIcon } from "../Components/Common/Icons";
+import TeamTable from "../Components/Tables/TeamTable";
+import ViewTeam from "../Components/Modals/ViewTeam";
 
 const recordsPerPage = 10;
 const Teams = () => {
@@ -108,7 +108,7 @@ const Teams = () => {
             </InputGroup>
           </div>
 
-          <Teamtable
+          <TeamTable
             handleSort={handleSort}
             isSorted={isSorted}
             teamsData={teamsData}

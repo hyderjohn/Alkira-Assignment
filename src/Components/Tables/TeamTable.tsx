@@ -1,8 +1,8 @@
 import { Table, Button } from "react-bootstrap";
-import { TeamDataTypes } from "../../../Types/TeamTypes";
-import { search } from "../../../utils/helperFunctions";
 import { SortIconUp, SortIconDown } from "../Common/Icons";
-import Styles from "../../../Styles/style.module.css";
+import { TeamDataTypes } from "../../Types/TeamTypes";
+import { search } from "../../utils/helperFunctions";
+import Styles from "../../Styles/style.module.css";
 
 interface TeamTableProps {
   handleSort: () => void;
@@ -12,7 +12,7 @@ interface TeamTableProps {
   handleViewTeam: (data: TeamDataTypes) => void;
 }
 
-const Teamtable = ({
+const TeamTable = ({
   handleSort,
   isSorted,
   teamsData,
@@ -66,4 +66,4 @@ const Teamtable = ({
   );
 };
 
-export default Teamtable;
+export default TeamTable;
