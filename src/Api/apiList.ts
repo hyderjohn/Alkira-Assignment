@@ -1,5 +1,3 @@
-import { showErrorToast } from "../utils/helperFunctions";
-
 export const getTeamList = async ({
   page,
   size,
@@ -13,7 +11,7 @@ export const getTeamList = async ({
     );
     return await response.json();
   } catch (error) {
-    alert("Something Went Wrong in API Error");
+    alert("Something Went Wrong");
     console.log(error);
   }
 };
@@ -26,6 +24,6 @@ export const getGameInfo = async (id: number) => {
     return await response.json();
   } catch (error) {
     console.log(error);
-    alert("Something Went Wrong in API Error");
+    alert("Something Went Wrong");
   }
 };

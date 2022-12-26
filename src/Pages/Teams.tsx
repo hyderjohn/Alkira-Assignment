@@ -117,19 +117,17 @@ const Teams = () => {
               <tr>
                 <th>Team Name</th>
                 <th>
-                  City
-                  <Button
-                    variant="link"
-                    size="sm"
-                    onClick={() => handleSort()}
-                    style={{
-                      padding: "0rem",
-                      textAlign: "right",
-                      minWidth: "1.2rem",
-                    }}
-                  >
-                    {isSorted === true ? <SortIconUp /> : <SortIconDown />}
-                  </Button>
+                  <div className={Styles.columhead}>
+                    City
+                    <Button
+                      className={Styles.sortbutton}
+                      variant="link"
+                      size="sm"
+                      onClick={() => handleSort()}
+                    >
+                      {isSorted === true ? <SortIconUp /> : <SortIconDown />}
+                    </Button>
+                  </div>
                 </th>
                 <th>Abbreviation</th>
                 <th>Conference</th>

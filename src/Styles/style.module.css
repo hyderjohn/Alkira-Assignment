@@ -13,3 +13,14 @@
   color: #054684;
   margin: 10px;
 }
+
+.columhead {
+  display: flex;
+  justify-content: space-between;
+}
+
+.sortbutton {
+  padding: 0rem;
+  text-align: right;
+  min-width: 1.2rem;
+}
