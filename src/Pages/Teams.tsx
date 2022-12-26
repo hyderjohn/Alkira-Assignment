@@ -44,6 +44,7 @@ const Teams = () => {
       }
     };
     teamsList();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentPage]);
 
   const handleViewTeam = (data: TeamDataTypes) => {

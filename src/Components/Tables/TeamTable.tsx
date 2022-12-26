@@ -59,6 +59,8 @@ const TeamTable = ({
                   <td>{item?.division}</td>
                 </tr>
               );
+            } else {
+              return <></>;
             }
           })}
       </tbody>
