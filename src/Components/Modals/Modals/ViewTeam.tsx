@@ -1,10 +1,9 @@
 import { useEffect, useState } from "react";
 import { Col, Modal, Row } from "react-bootstrap";
-import { getGameInfo } from "../../Api/apiList";
-import { GameTypes, TeamDataTypes } from "../../Types/TeamTypes";
-import { formatDate } from "../../utils/helperFunctions";
-import LoadingUI from "./Common/LoadingUI";
-import "./teaminfomodal.css";
+import { getGameInfo } from "../../../Api/apiList";
+import { GameTypes, TeamDataTypes } from "../../../Types/TeamTypes";
+import LoadingUI from "../Common/LoadingUI";
+import "./viewteaminfomodal.css";
 
 interface TeamInfoProps {
   visible: boolean;
@@ -13,7 +12,7 @@ interface TeamInfoProps {
   teamInfo: TeamDataTypes;
 }
 
-const TeamInfo = ({ visible, handleClose, id, teamInfo }: TeamInfoProps) => {
+const ViewTeam = ({ visible, handleClose, id, teamInfo }: TeamInfoProps) => {
   const [gameInfoData, setGameInfoData] = useState<GameTypes>();
   const [loading, setLoading] = useState(false);
 
@@ -147,4 +146,4 @@ const TeamInfo = ({ visible, handleClose, id, teamInfo }: TeamInfoProps) => {
   );
 };
 
-export default TeamInfo;
+export default ViewTeam;

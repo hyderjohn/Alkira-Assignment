@@ -1,4 +1,3 @@
-import React from "react";
 import { Spinner } from "react-bootstrap";
 
 const LoadingUI = () => {
@@ -10,7 +9,3 @@ const LoadingUI = () => {
 };
 
 export default LoadingUI;
-
-// export interface AuxProps {
-//   children: ReactChild | ReactChild[] | ReactChildren | ReactChildren[];
-// }

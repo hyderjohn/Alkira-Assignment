@@ -1,0 +1,15 @@
+.head {
+  background-color: #054684;
+  color: white;
+}
+.row {
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.tablepage {
+  display: flex;
+  align-items: end;
+  color: #054684;
+  margin: 10px;
+}

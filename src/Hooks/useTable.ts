@@ -8,19 +8,9 @@ const useTable = () => {
     setSearchKeyword(keyword);
   };
 
-  //   const nextPage = () => {
-  //     if (currentPage !== pageCount) setCurrentPage(currentPage + 1);
-  //   };
-
-  //   const prevPage = () => {
-  //     if (currentPage !== 1) setCurrentPage(currentPage - 1);
-  //   };
-
   return {
     currentPage,
     setCurrentPage,
-    // prevPage,
-    // nextPage,
     searchKeyword,
     handleSearch,
   };

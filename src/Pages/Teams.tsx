@@ -3,11 +3,16 @@ import { Button, Form, InputGroup, Table } from "react-bootstrap";
 import { getTeamList } from "../Api/apiList";
 import LoadingUI from "../Components/Modals/Common/LoadingUI";
 import TablePagination from "../Components/Modals/Common/Pagination";
-import SearchIcon from "../Components/Modals/Common/SearchIcon";
-import TeamInfo from "../Components/Modals/TeamInfo";
+import ViewTeam from "../Components/Modals/Modals/ViewTeam";
 import useTable from "../Hooks/useTable";
 import { TeamApiDataTypes, TeamDataTypes } from "../Types/TeamTypes";
 import { search } from "../utils/helperFunctions";
+import Styles from "../Styles/style.module.css";
+import {
+  SortIconUp,
+  SearchIcon,
+  SortIconDown,
+} from "../Components/Modals/Common/Icons";
 
 const recordsPerPage = 10;
 const Teams = () => {
@@ -18,31 +23,29 @@ const Teams = () => {
   const [teamsData, setTeamsData] = useState<TeamApiDataTypes | undefined>();
   const [showTeamInfoModal, setShowTeamInfoModal] = useState(false);
   const [teamInfo, setTeamInfo] = useState<TeamDataTypes>();
-  const [sortedData, setSortedData] = useState<string[]>([]);
+  const [isSorted, setIsSorted] = useState(false);
   const [loading, setLoading] = useState(false);
   useEffect(() => {
     const teamsList = async () => {
       setLoading(true);
-      const data = await getTeamList({
+      const newData = await getTeamList({
         page: currentPage,
         size: recordsPerPage,
       });
       setLoading(false);
-      if (data) {
-        setTeamsData(data);
+      if (newData) {
+        if (isSorted === false) {
+          setTeamsData(newData);
+        } else {
+          setTeamsData({
+            ...newData,
+            data: newData?.data,
+          });
+        }
       }
     };
     teamsList();
   }, [currentPage]);
-
-  // useEffect(() => {
-  //   if (teamsData) {
-  //     const data = teamsData.data?.map((item: any) => {
-  //       return item.sort(()=>{});
-  //     });
-  //     setSortedData(data);
-  //   }
-  // }, [teamsData]);
 
   const handleViewTeam = (data: TeamDataTypes) => {
     idRef.current = data?.id;
@@ -51,21 +54,39 @@ const Teams = () => {
   };
   const pageCount = teamsData && teamsData?.meta?.total_pages;
 
-  // const sorted = teamsData?.data.sort((a: any, b: any) => {
-  //   return a.city > b.city ? -1 : 1;
-  // });
-  // console.log(sorted);
+  const sorted = () => {
+    if (isSorted === false) {
+      const data = teamsData?.data.sort(
+        (a: { city: string }, b: { city: string }) => {
+          return a.city > b.city ? -1 : 1;
+        }
+      );
+      if (data && teamsData) {
+        setTeamsData({
+          ...teamsData,
+          data: data,
+        });
+        setIsSorted(true);
+      }
+    } else if (isSorted === true) {
+      const data = teamsData?.data.sort(
+        (a: { city: string }, b: { city: string }) => {
+          return a.city > b.city ? 1 : -1;
+        }
+      );
+      if (data && teamsData) {
+        setTeamsData({
+          ...teamsData,
+          data: data,
+        });
+        setIsSorted(false);
+      }
+    }
+  };
 
   return (
     <>
-      <div
-        style={{
-          display: "flex",
-          alignItems: "end",
-          color: "#054684",
-          margin: "10px",
-        }}
-      >
+      <div className={Styles.tablepage}>
         <p className="h2 font-weight-bold">
           <strong>NBA TEAMS</strong>
         </p>
@@ -90,28 +111,29 @@ const Teams = () => {
           </div>
 
           <Table hover className="sortable">
-            <thead style={{ backgroundColor: "#054684", color: "white" }}>
+            <thead className={Styles.head}>
               <tr>
                 <th>Team Name</th>
                 <th
-                // style={{
-                //   display: "flex",
-                //   justifyContent: "space-between",
-                //   alignContent: "center",
-                // }}
+                  style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                  }}
                 >
                   City
-                  {/* {
-                    <span>
-                      <Button
-                        variant="link"
-                        size="sm"
-                        // onClick={() => handleSort}
-                      >
-                        A
-                      </Button>
-                    </span>
-                  } */}
+                  <Button
+                    variant="link"
+                    size="sm"
+                    onClick={() => sorted()}
+                    style={{
+                      padding: "0rem",
+                      textAlign: "right",
+                      minWidth: "1.2rem",
+                    }}
+                  >
+                    {isSorted === true ? <SortIconUp /> : <SortIconDown />}
+                  </Button>
                 </th>
                 <th>Abbreviation</th>
                 <th>Conference</th>
@@ -124,9 +146,9 @@ const Teams = () => {
                   if (search(item, searchKeyword)) {
                     return (
                       <tr
+                        className={Styles.row}
                         onClick={() => handleViewTeam(item)}
                         key={item.id}
-                        style={{ cursor: "pointer", fontWeight: "bold" }}
                       >
                         <td>{item?.name}</td>
                         <td>{item?.city}</td>
@@ -151,7 +173,7 @@ const Teams = () => {
       {loading && <LoadingUI />}
 
       {showTeamInfoModal && (
-        <TeamInfo
+        <ViewTeam
           visible={showTeamInfoModal}
           handleClose={() => setShowTeamInfoModal(false)}
           id={idRef.current as number}

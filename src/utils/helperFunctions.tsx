@@ -1,16 +1,5 @@
-import moment from "moment";
+import { Toast } from "react-bootstrap";
 import { TeamDataTypes } from "../Types/TeamTypes";
-
-export const formatDate = (date: string) => {
-  if (!date) return "";
-  try {
-    const formatDate = moment(date).format("YYYY-MM-DD");
-    return formatDate;
-  } catch (error) {
-    console.log(error);
-  }
-  return "--";
-};
 
 export const showErrorAlert = () => {
   return (
@@ -32,23 +21,6 @@ export const showErrorAlert = () => {
 };
 
 export const search = (currentItem: TeamDataTypes, keyword: string) => {
-  // for (let label in currentItem) {
-  //   console.log(currentItem, keyword);
-  //   // console.log(currentItem[label]);
-  //   if (currentItem[label].toLoweCase().includes(keyword.toLowerCase())) {
-  //     return true;
-  //   } else {
-  //     return false;
-  //   }
-  // if (key !== "city" && key !== "id" && key !== "full_name") {
-  //   if (currentItem[key].toLoweCase().includes(keyword.toLowerCase())) {
-  //     return true;
-  //   } else {
-  //     return false;
-  //   }
-  // }
-  // return true;
-  // }
   if (
     currentItem?.name.toLowerCase().includes(keyword.toLowerCase()) ||
     currentItem?.abbreviation.toLowerCase().includes(keyword.toLowerCase()) ||
@@ -59,4 +31,16 @@ export const search = (currentItem: TeamDataTypes, keyword: string) => {
   } else {
     return false;
   }
+};
+
+export const showErrorToast = (msg: string) => {
+  return (
+    <Toast>
+      <Toast.Header>
+        <img src="holder.js/20x20?text=%20" className="rounded me-2" alt="" />
+        <strong className="me-auto">Error!</strong>
+      </Toast.Header>
+      <Toast.Body>{msg}</Toast.Body>
+    </Toast>
+  );
 };

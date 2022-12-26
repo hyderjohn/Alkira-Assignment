@@ -1,3 +1,5 @@
+import { showErrorToast } from "../utils/helperFunctions";
+
 export const getTeamList = async ({
   page,
   size,
@@ -11,18 +13,8 @@ export const getTeamList = async ({
     );
     return await response.json();
   } catch (error) {
-    // console.log(error);
-  }
-};
-
-export const getTeamInfo = async (id: number) => {
-  try {
-    const response = await fetch(
-      `https://www.balldontlie.io/api/v1/teams/${id}`
-    );
-    return await response.json();
-  } catch (error) {
-    console.log(error);
+    // showErrorToast("Error in API");
+    alert("Error");
   }
 };
 
