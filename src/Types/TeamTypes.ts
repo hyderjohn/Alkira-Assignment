@@ -34,3 +34,11 @@ export interface GameTypes {
   visitor_team: TeamDataTypes;
   visitor_team_score: number;
 }
+
+export enum ColumnKeys {
+  ABR = "abbreviation",
+  CITY = "city",
+  CONF = "conference",
+  DIV = "division",
+  NAME = "name",
+}

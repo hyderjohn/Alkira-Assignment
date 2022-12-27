@@ -53,32 +53,169 @@ const Teams = () => {
     setShowTeamInfoModal(true);
   };
 
-  const handleSort = () => {
+  const handleSort = (key: string) => {
+    console.log("sort by key", key);
+
+    //1
     if (isSorted === false) {
-      const data = teamsData?.data.sort(
-        (a: { city: string }, b: { city: string }) => {
-          return a.city > b.city ? -1 : 1;
+      if (key === "city") {
+        const data = teamsData?.data.sort(
+          (a: { city: string }, b: { city: string }) => {
+            return a.city > b.city ? -1 : 1;
+          }
+        );
+        if (data && teamsData) {
+          setTeamsData({
+            ...teamsData,
+            data: data,
+          });
+          setIsSorted(true);
         }
-      );
-      if (data && teamsData) {
-        setTeamsData({
-          ...teamsData,
-          data: data,
-        });
-        setIsSorted(true);
       }
     } else if (isSorted === true) {
-      const data = teamsData?.data.sort(
-        (a: { city: string }, b: { city: string }) => {
-          return a.city > b.city ? 1 : -1;
+      if (key === "city") {
+        const data = teamsData?.data.sort(
+          (a: { city: string }, b: { city: string }) => {
+            return a.city > b.city ? 1 : -1;
+          }
+        );
+        if (data && teamsData) {
+          setTeamsData({
+            ...teamsData,
+            data: data,
+          });
+          setIsSorted(false);
         }
-      );
-      if (data && teamsData) {
-        setTeamsData({
-          ...teamsData,
-          data: data,
-        });
-        setIsSorted(false);
+      }
+    }
+
+    //2
+
+    if (isSorted === false) {
+      if (key === "name") {
+        const data = teamsData?.data.sort(
+          (a: { name: string }, b: { name: string }) => {
+            return a.name > b.name ? -1 : 1;
+          }
+        );
+        if (data && teamsData) {
+          setTeamsData({
+            ...teamsData,
+            data: data,
+          });
+          setIsSorted(true);
+        }
+      }
+    } else if (isSorted === true) {
+      if (key === "name") {
+        const data = teamsData?.data.sort(
+          (a: { name: string }, b: { name: string }) => {
+            return a.name > b.name ? 1 : -1;
+          }
+        );
+        if (data && teamsData) {
+          setTeamsData({
+            ...teamsData,
+            data: data,
+          });
+          setIsSorted(false);
+        }
+      }
+    }
+    //3
+    if (isSorted === false) {
+      if (key === "abbreviation") {
+        const data = teamsData?.data.sort(
+          (a: { abbreviation: string }, b: { abbreviation: string }) => {
+            return a.abbreviation > b.abbreviation ? -1 : 1;
+          }
+        );
+        if (data && teamsData) {
+          setTeamsData({
+            ...teamsData,
+            data: data,
+          });
+          setIsSorted(true);
+        }
+      }
+    } else if (isSorted === true) {
+      if (key === "abbreviation") {
+        const data = teamsData?.data.sort(
+          (a: { abbreviation: string }, b: { abbreviation: string }) => {
+            return a.abbreviation > b.abbreviation ? 1 : -1;
+          }
+        );
+        if (data && teamsData) {
+          setTeamsData({
+            ...teamsData,
+            data: data,
+          });
+          setIsSorted(false);
+        }
+      }
+    }
+    //4
+    if (isSorted === false) {
+      if (key === "conference") {
+        const data = teamsData?.data.sort(
+          (a: { conference: string }, b: { conference: string }) => {
+            return a.conference > b.conference ? -1 : 1;
+          }
+        );
+        if (data && teamsData) {
+          setTeamsData({
+            ...teamsData,
+            data: data,
+          });
+          setIsSorted(true);
+        }
+      }
+    } else if (isSorted === true) {
+      if (key === "conference") {
+        const data = teamsData?.data.sort(
+          (a: { conference: string }, b: { conference: string }) => {
+            return a.conference > b.conference ? 1 : -1;
+          }
+        );
+        if (data && teamsData) {
+          setTeamsData({
+            ...teamsData,
+            data: data,
+          });
+          setIsSorted(false);
+        }
+      }
+    }
+    //5
+    if (isSorted === false) {
+      if (key === "division") {
+        const data = teamsData?.data.sort(
+          (a: { division: string }, b: { division: string }) => {
+            return a.division > b.division ? -1 : 1;
+          }
+        );
+        if (data && teamsData) {
+          setTeamsData({
+            ...teamsData,
+            data: data,
+          });
+          setIsSorted(true);
+        }
+      }
+    } else if (isSorted === true) {
+      if (key === "division") {
+        const data = teamsData?.data.sort(
+          (a: { division: string }, b: { division: string }) => {
+            return a.division > b.division ? 1 : -1;
+          }
+        );
+        if (data && teamsData) {
+          setTeamsData({
+            ...teamsData,
+            data: data,
+          });
+          setIsSorted(false);
+        }
       }
     }
   };
