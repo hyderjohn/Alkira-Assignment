@@ -4,6 +4,7 @@ import { TeamDataTypes } from "../Types/TeamTypes";
 export const search = (item: TeamDataTypes, searchKeyword: string) => {
   if (
     item?.name.toLowerCase().includes(searchKeyword.toLowerCase()) ||
+    item?.city.toLowerCase().includes(searchKeyword.toLowerCase()) ||
     item?.abbreviation.toLowerCase().includes(searchKeyword.toLowerCase()) ||
     item?.division.toLowerCase().includes(searchKeyword.toLowerCase()) ||
     item?.conference.toLowerCase().includes(searchKeyword.toLowerCase())

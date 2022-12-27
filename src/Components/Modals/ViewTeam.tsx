@@ -5,21 +5,28 @@ import { GameTypes, TeamDataTypes } from "../../Types/TeamTypes";
 import LoadingUI from "../Common/LoadingUI";
 import "./viewteaminfomodal.css";
 
+const TOTAL_NO_OF_GAMES = 46911;
+
 interface TeamInfoProps {
   visible: boolean;
   handleClose: () => void;
-  id: number;
   teamInfo: TeamDataTypes;
+  setSelectedRow: (arg: number | null) => void;
 }
 
-const ViewTeam = ({ visible, handleClose, id, teamInfo }: TeamInfoProps) => {
+const ViewTeam = ({
+  visible,
+  handleClose,
+  teamInfo,
+  setSelectedRow,
+}: TeamInfoProps) => {
   const [gameInfoData, setGameInfoData] = useState<GameTypes>();
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const gameInfo = async () => {
       setLoading(true);
-      let randomId = Math.floor(Math.random() * 46911 + 1);
+      let randomId = Math.floor(Math.random() * TOTAL_NO_OF_GAMES + 1); // GENERATING ANY RANDOM ID BETWEEN RANGE 1 TO NUMBER OF ITEMS IN GAMES.
       const data = await getGameInfo(randomId);
       setLoading(false);
       if (data) {
@@ -31,7 +38,13 @@ const ViewTeam = ({ visible, handleClose, id, teamInfo }: TeamInfoProps) => {
 
   return (
     <div>
-      <Modal show={visible} onHide={handleClose}>
+      <Modal
+        show={visible}
+        onHide={() => {
+          handleClose();
+          setSelectedRow(null);
+        }}
+      >
         <Modal.Header closeButton style={{ backgroundColor: "#d8dfe4" }}>
           <Modal.Title>
             <strong>{teamInfo?.name}</strong>
