@@ -16,6 +16,7 @@ const SearchInput = ({
           <SearchIcon />
         </InputGroup.Text>
         <Form.Control
+          cy-data="search"
           className="shadow-none"
           aria-label="search"
           aria-describedby="basic-addon1"

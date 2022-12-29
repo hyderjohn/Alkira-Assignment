@@ -5,15 +5,15 @@ import { useState } from "react";
 
 interface SortButtonProps {
   handleSort: (arg: string) => void;
-  isSorted: boolean;
   sortKey: string;
 }
 
-const SortButton = ({ sortKey, isSorted, handleSort }: SortButtonProps) => {
+const SortButton = ({ sortKey, handleSort }: SortButtonProps) => {
   const [filterStatus, setFilterStatus] = useState(false);
   return (
     <Button
       className={Styles.sortbutton}
+      cy-data={sortKey}
       variant="link"
       size="sm"
       onClick={() => {

@@ -35,6 +35,7 @@ const TablePagination = ({
             <div
               onClick={() => setCurrentPage(pageNumber)}
               className="page-link"
+              cy-data={pageNumber}
             >
               {pageNumber}
             </div>

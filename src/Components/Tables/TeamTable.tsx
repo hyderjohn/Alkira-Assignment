@@ -30,57 +30,37 @@ const TeamTable = ({
 
   return (
     <>
-      <Table hover>
-        <thead className={Styles.head}>
+      <Table hover cy-data="teams">
+        <thead className={Styles.head} data-cy="table-head">
           <tr>
             <th>
               <div className={Styles.columhead}>
                 Team Name
-                <SortButton
-                  isSorted={isSorted}
-                  sortKey={ColumnKeys.NAME}
-                  handleSort={handleSort}
-                />
+                <SortButton sortKey={ColumnKeys.NAME} handleSort={handleSort} />
               </div>
             </th>
             <th>
               <div className={Styles.columhead}>
                 City
-                <SortButton
-                  isSorted={isSorted}
-                  sortKey={ColumnKeys.CITY}
-                  handleSort={handleSort}
-                />
+                <SortButton sortKey={ColumnKeys.CITY} handleSort={handleSort} />
               </div>
             </th>
             <th>
               <div className={Styles.columhead}>
                 Abbreviation
-                <SortButton
-                  isSorted={isSorted}
-                  sortKey={ColumnKeys.ABR}
-                  handleSort={handleSort}
-                />
+                <SortButton sortKey={ColumnKeys.ABR} handleSort={handleSort} />
               </div>
             </th>
             <th>
               <div className={Styles.columhead}>
                 Conference
-                <SortButton
-                  isSorted={isSorted}
-                  sortKey={ColumnKeys.CONF}
-                  handleSort={handleSort}
-                />
+                <SortButton sortKey={ColumnKeys.CONF} handleSort={handleSort} />
               </div>
             </th>
             <th>
               <div className={Styles.columhead}>
                 Division
-                <SortButton
-                  isSorted={isSorted}
-                  sortKey={ColumnKeys.DIV}
-                  handleSort={handleSort}
-                />
+                <SortButton sortKey={ColumnKeys.DIV} handleSort={handleSort} />
               </div>
             </th>
           </tr>
@@ -100,8 +80,9 @@ const TeamTable = ({
                       background: selectedRow === item.id ? "#F2F2F2" : "unset",
                     }}
                     key={item.id}
+                    cy-data={item.name}
                   >
-                    <td>{item?.name}</td>
+                    <td cy-data={"Hawks"}>{item?.name}</td>
                     <td>{item?.city}</td>
                     <td>{item?.abbreviation}</td>
                     <td>{item?.conference}</td>
