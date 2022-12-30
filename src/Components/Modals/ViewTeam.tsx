@@ -70,86 +70,88 @@ const ViewTeam = ({
           </Row>
           {!loading && (
             <>
-              <Row>
-                <div className="mb-3">
-                  <p>
-                    <strong>Random Game Details:</strong>
-                  </p>
-                </div>
-              </Row>
-              <Row>
-                <Col>
+                <Row>
                   <div className="mb-3">
                     <p>
-                      <strong>Date</strong>
+                      <strong>Random Game Details:</strong>
                     </p>
                   </div>
-                </Col>
-                <Col>
-                  <p>
-                    <strong>
-                      {gameInfoData &&
-                        gameInfoData?.date.toLocaleString().slice(0, 10)}
-                    </strong>
-                  </p>
-                </Col>
-              </Row>
-              <Row>
-                <Col>
-                  <div className="mb-3">
+                </Row>
+              <div cy-data = "random">
+                <Row>
+                  <Col>
+                    <div className="mb-3">
+                      <p>
+                        <strong>Date</strong>
+                      </p>
+                    </div>
+                  </Col>
+                  <Col>
                     <p>
-                      <strong>Home Team</strong>
+                      <strong>
+                        {gameInfoData &&
+                          gameInfoData?.date.toLocaleString().slice(0, 10)}
+                      </strong>
                     </p>
-                  </div>
-                </Col>
-                <Col>
-                  <p>
-                    <strong>{gameInfoData?.home_team?.name}</strong>
-                  </p>
-                </Col>
-              </Row>
-              <Row>
-                <Col>
-                  <div className="mb-3">
+                  </Col>
+                </Row>
+                <Row>
+                  <Col>
+                    <div className="mb-3">
+                      <p>
+                        <strong>Home Team</strong>
+                      </p>
+                    </div>
+                  </Col>
+                  <Col>
                     <p>
-                      <strong>Home Team Score</strong>
+                      <strong>{gameInfoData?.home_team?.name}</strong>
                     </p>
-                  </div>
-                </Col>
-                <Col>
-                  <p>
-                    <strong>{gameInfoData?.home_team_score}</strong>
-                  </p>
-                </Col>
-              </Row>
-              <Row>
-                <Col>
-                  <div className="mb-3">
+                  </Col>
+                </Row>
+                <Row>
+                  <Col>
+                    <div className="mb-3">
+                      <p>
+                        <strong>Home Team Score</strong>
+                      </p>
+                    </div>
+                  </Col>
+                  <Col>
                     <p>
-                      <strong>Visitor Team</strong>
+                      <strong>{gameInfoData?.home_team_score}</strong>
                     </p>
-                  </div>
-                </Col>
-                <Col>
-                  <p>
-                    <strong>{gameInfoData?.visitor_team?.name}</strong>
-                  </p>
-                </Col>
-              </Row>
-              <Row>
-                <Col>
-                  <div className="mb-3">
+                  </Col>
+                </Row>
+                <Row>
+                  <Col>
+                    <div className="mb-3">
+                      <p>
+                        <strong>Visitor Team</strong>
+                      </p>
+                    </div>
+                  </Col>
+                  <Col>
                     <p>
-                      <strong>Visitor Team Score</strong>
+                      <strong>{gameInfoData?.visitor_team?.name}</strong>
                     </p>
-                  </div>
-                </Col>
-                <Col>
-                  <p>
-                    <strong>{gameInfoData?.visitor_team_score}</strong>
-                  </p>
-                </Col>
-              </Row>
+                  </Col>
+                </Row>
+                <Row>
+                  <Col>
+                    <div className="mb-3">
+                      <p>
+                        <strong>Visitor Team Score</strong>
+                      </p>
+                    </div>
+                  </Col>
+                  <Col>
+                    <p>
+                      <strong>{gameInfoData?.visitor_team_score}</strong>
+                    </p>
+                  </Col>
+                </Row>
+              </div>
             </>
           )}
           {loading && <LoadingUI />}

@@ -18,6 +18,7 @@ describe("Teams Test", () => {
   it("Modal Test", () => {
     cy.visit("http://localhost:3000/");
     cy.get("[cy-data='Celtics']").click();
+    cy.get("[cy-data = 'random']");
     cy.get(".modal-title").contains("Celtics");
     cy.get("[aria-label='Close']").click();
   });

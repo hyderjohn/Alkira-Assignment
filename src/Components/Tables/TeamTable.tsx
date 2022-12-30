@@ -8,14 +8,12 @@ import ViewTeam from "../Modals/ViewTeam";
 
 interface TeamTableProps {
   handleSort: (arg: string) => void;
-  isSorted: boolean;
   teamsData: any;
   searchKeyword: string;
 }
 
 const TeamTable = ({
   handleSort,
-  isSorted,
   teamsData,
   searchKeyword,
 }: TeamTableProps) => {

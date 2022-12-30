@@ -11,13 +11,18 @@ import SearchInput from "../Components/Common/SearchInput";
 const recordsPerPage = 10;
 
 const Teams = () => {
-  const { currentPage, setCurrentPage, searchKeyword, handleSearch } =
-    useTable();
+  const {
+    currentPage,
+    setCurrentPage,
+    searchKeyword,
+    handleSearch,
+    loading,
+    setLoading,
+    isSorted,
+    setIsSorted,
+  } = useTable();
 
   const [teamsData, setTeamsData] = useState<TeamApiDataTypes | undefined>();
-  const [isSorted, setIsSorted] = useState(false);
-  const [loading, setLoading] = useState(false);
-
   const pageCount = teamsData && teamsData?.meta?.total_pages; // total pages data from api.
 
   useEffect(() => {
@@ -72,7 +77,6 @@ const Teams = () => {
           <SearchInput handleSearch={handleSearch} />
           <TeamTable
             handleSort={handleSort}
-            isSorted={isSorted}
             teamsData={teamsData}
             searchKeyword={searchKeyword}
           />
